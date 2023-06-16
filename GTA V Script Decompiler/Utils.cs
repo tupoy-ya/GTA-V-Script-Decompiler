@@ -24,7 +24,7 @@ namespace Decompiler
 		public static string Represent(long value, Types.TypeInfo type)
 		{
 			if (type == Types.FLOAT)
-				return BitConverter.ToSingle(BitConverter.GetBytes(value), 0).ToString() + "f";
+				return BitConverter.ToSingle(BitConverter.GetBytes(value), 0).ToString() + ".f";
 
 			if (type.Enum != null)
 				if (type.Enum.TryGetValue((int)value, out var enumValue))
