@@ -1,4 +1,5 @@
-﻿namespace System.Windows.Forms
+﻿#if TARGET_WINDOWS
+namespace System.Windows.Forms
 {
 	/// <summary>
 	/// Base in-accessable class for listbox containing methods
@@ -355,3 +356,4 @@
 		}
 	}
 }
+#endif // TARGET_WINDOWS

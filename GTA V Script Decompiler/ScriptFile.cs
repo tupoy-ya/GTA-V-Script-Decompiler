@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 
 namespace Decompiler
 {
@@ -40,9 +41,15 @@ namespace Decompiler
             }
         }
 
+#if TARGET_WINDOWS
         public async Task Decompile(ProgressBar bar = null)
+#else
+        public async Task Decompile()
+#endif
         {
+#if TARGET_WINDOWS
             ProgressBar = bar;
+#endif
 
             GetStaticInfo();
 
@@ -61,7 +68,9 @@ namespace Decompiler
                         func.Hook = hook;
             }
 
+#if TARGET_WINDOWS
             bar?.SetMax(Functions.Count + 1);
+#endif
 
             foreach (var func in Functions)
             {
@@ -358,8 +367,10 @@ namespace Decompiler
 
         public void NotifyFunctionDecompiled()
         {
+#if TARGET_WINDOWS
             if (!Debugger.IsAttached) // Cross-thread operation not valid: Control 'progressBar1' accessed from a thread other than the thread it was created on. ???
                 ProgressBar?.IncrementValue();
+#endif
         }
     }
 }
