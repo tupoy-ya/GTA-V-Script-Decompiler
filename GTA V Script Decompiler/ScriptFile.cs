@@ -44,12 +44,11 @@ namespace Decompiler
 
 #if OS_WINDOWS
         public async Task Decompile(ProgressBar bar = null)
+        {
+            ProgressBar = bar;
 #else
         public async Task Decompile()
-#endif // OS_WINDOWS
         {
-#if OS_WINDOWS
-            ProgressBar = bar;
 #endif // OS_WINDOWS
 
             GetStaticInfo();
