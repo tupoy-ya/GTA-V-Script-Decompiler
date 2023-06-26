@@ -31,7 +31,6 @@ jobs:
         path: "GTA V Script Decompiler\\bin\\Release\\net6.0"
         if-no-files-found: error
 
-jobs:
   build_windows:
     name: Linux
     runs-on: ubuntu-latest
