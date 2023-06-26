@@ -3,7 +3,7 @@ name: .NET
 on: [push]
 
 jobs:
-  build:
+  build_windows:
     name: Windows
     runs-on: windows-latest
 
@@ -32,7 +32,7 @@ jobs:
         if-no-files-found: error
 
 jobs:
-  build:
+  build_windows:
     name: Linux
     runs-on: ubuntu-latest
 

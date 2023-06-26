@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 #if TARGET_WINDOWS
 using System.Windows.Forms;
-#endif
+#endif // TARGET_WINDOWS
 
 namespace Decompiler
 {
@@ -53,7 +53,7 @@ namespace Decompiler
 				Application.SetHighDpiMode(HighDpiMode.SystemAware);
 				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new MainForm());
-#endif
+#endif // TARGET_WINDOWS
 			}
 			else
 			{

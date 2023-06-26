@@ -45,11 +45,11 @@ namespace Decompiler
         public async Task Decompile(ProgressBar bar = null)
 #else
         public async Task Decompile()
-#endif
+#endif // TARGET_WINDOWS
         {
 #if TARGET_WINDOWS
             ProgressBar = bar;
-#endif
+#endif // TARGET_WINDOWS
 
             GetStaticInfo();
 
@@ -70,7 +70,7 @@ namespace Decompiler
 
 #if TARGET_WINDOWS
             bar?.SetMax(Functions.Count + 1);
-#endif
+#endif // TARGET_WINDOWS
 
             foreach (var func in Functions)
             {
@@ -370,7 +370,7 @@ namespace Decompiler
 #if TARGET_WINDOWS
             if (!Debugger.IsAttached) // Cross-thread operation not valid: Control 'progressBar1' accessed from a thread other than the thread it was created on. ???
                 ProgressBar?.IncrementValue();
-#endif
+#endif // TARGET_WINDOWS
         }
     }
 }
