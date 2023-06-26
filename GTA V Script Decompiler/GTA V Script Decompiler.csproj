@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <OutputType>Exe</OutputType>
     <RootNamespace>Decompiler</RootNamespace>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -24,6 +22,12 @@
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <RunCodeAnalysis>false</RunCodeAnalysis>

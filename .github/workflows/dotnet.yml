@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Release-Windows
-        path: "GTA V Script Decompiler\\bin\\Release\\net6.0"
+        path: "GTA V Script Decompiler/bin/Release/net6.0"
         if-no-files-found: error
 
   build_linux:
@@ -56,5 +56,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Release-Linux
-        path: "GTA V Script Decompiler\\bin\\Release\\net6.0"
+        path: "GTA V Script Decompiler/bin/Release/net6.0"
         if-no-files-found: error
