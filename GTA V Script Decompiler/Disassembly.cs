@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 using Decompiler.Patches;
 using System;
 using System.Collections.Generic;
@@ -451,4 +451,4 @@ fail:
         }
     }
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS

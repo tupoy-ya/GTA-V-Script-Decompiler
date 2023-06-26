@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 namespace Decompiler
 {
     partial class Disassembly
@@ -153,4 +153,4 @@ namespace Decompiler
         private System.Windows.Forms.ToolStripMenuItem CreatePatternToolStripMenuItem;
     }
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS

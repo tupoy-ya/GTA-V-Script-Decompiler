@@ -2,9 +2,9 @@
 using System;
 using System.Globalization;
 using System.IO;
-#if TARGET_WINDOWS
+#if OS_WINDOWS
 using System.Windows.Forms;
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS
 
 namespace Decompiler
 {
@@ -48,12 +48,12 @@ namespace Decompiler
 
 			if (args.Length == 0)
 			{
-#if TARGET_WINDOWS
+#if OS_WINDOWS
 				Application.EnableVisualStyles();
 				Application.SetHighDpiMode(HighDpiMode.SystemAware);
 				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new MainForm());
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS
 			}
 			else
 			{

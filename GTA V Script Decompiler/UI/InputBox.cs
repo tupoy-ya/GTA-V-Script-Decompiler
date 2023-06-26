@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 namespace System.Windows.Forms
 {
 	/// <summary>
@@ -356,4 +356,4 @@ namespace System.Windows.Forms
 		}
 	}
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS

@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 using Decompiler.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -700,4 +700,4 @@ namespace Decompiler
 		}
 	}
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS

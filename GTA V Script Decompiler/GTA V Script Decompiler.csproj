@@ -24,6 +24,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
+    <DefineConstants>OS_WINDOWS</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
     <TargetFramework>net6.0</TargetFramework>

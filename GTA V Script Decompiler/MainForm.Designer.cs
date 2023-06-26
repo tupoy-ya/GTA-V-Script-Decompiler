@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 namespace Decompiler
 {
 	partial class MainForm
@@ -754,4 +754,4 @@ namespace Decompiler
         private System.Windows.Forms.ToolStripMenuItem commentToolStripMenuItem;
     }
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS

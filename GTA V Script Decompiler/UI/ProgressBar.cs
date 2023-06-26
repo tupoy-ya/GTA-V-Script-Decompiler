@@ -1,4 +1,4 @@
-﻿#if TARGET_WINDOWS
+﻿#if OS_WINDOWS
 using System.Windows.Forms;
 
 namespace Decompiler
@@ -54,4 +54,4 @@ namespace Decompiler
         }
     }
 }
-#endif // TARGET_WINDOWS
+#endif // OS_WINDOWS
