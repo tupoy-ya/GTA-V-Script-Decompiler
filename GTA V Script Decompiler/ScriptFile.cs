@@ -17,7 +17,9 @@ namespace Decompiler
         private readonly Stream file;
         public ScriptHeader Header;
         internal VariableStorage Statics;
+#if TARGET_WINDOWS
         internal ProgressBar? ProgressBar = null;
+#endif // TARGET_WINDOWS
 
         public Dictionary<int, Function> FunctionAtLocation = new();
         public Dictionary<Function, int> FunctionLines = new();
