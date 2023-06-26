@@ -82,6 +82,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.0-rc.2.22472.3" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
+    <PackageReference Include="FCTB" Version="2.16.24" />
+    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="7.0.0-rc.2.22472.3" />
   </ItemGroup>
