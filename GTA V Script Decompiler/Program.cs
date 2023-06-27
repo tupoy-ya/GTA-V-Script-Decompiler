@@ -26,18 +26,6 @@ namespace Decompiler
 		public static bool ShouldReverseHashes = Properties.Settings.Default.ReverseHashes;
 		public static int EnumDisplayTypeCache = Properties.Settings.Default.EnumDisplayType;
 
-		class Options
-		{
-			[Value(0, MetaName = "input file", HelpText = "Input file to be processed.", Required = false)]
-			public string FileName { get; set; }
-
-			[Option('r', "recurse", Default = false, HelpText = "Decompile files recursively.")]
-			public bool Recursive { get; set; }
-
-			[Option('n', "native_tables", HelpText = "Don't extract native tables.")]
-			public bool DontExtractNativeTables { get; set; }
-		}
-
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -81,18 +69,19 @@ namespace Decompiler
 		{
 			if (opts.Recursive)
 			{
-				BatchDecompile(opts.FileName, !opts.DontExtractNativeTables);
+				BatchDecompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose);
 			}
 			else
 			{
-				Decompile(opts.FileName, !opts.DontExtractNativeTables);
+				Decompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose);
 			}
 
 			Console.WriteLine("All done & saved!");
 		}
 
-		static void Decompile(string fileName, bool extractNativeTables)
+		static void Decompile(string fileName, bool extractNativeTables, bool verbose)
 		{
+			ScriptFile fileopen;
 			var Start = DateTime.Now;
 			var ext = Path.GetExtension(fileName);
 			if (ext == ".full")
@@ -100,8 +89,10 @@ namespace Decompiler
 				ext = Path.GetExtension(Path.GetFileNameWithoutExtension(fileName));
 			}
 
-			ScriptFile fileopen;
-			Console.WriteLine("Decompiling " + fileName + "...");
+			if(verbose)
+			{
+				Console.WriteLine("Decompiling " + fileName + "...");
+			}
 
 			try
 			{
@@ -120,7 +111,7 @@ namespace Decompiler
 			fileopen.Save(File.OpenWrite(fileName + ".c"), true);
 		}
 
-		static void BatchDecompile(string dirPath, bool extractNativeTables)
+		static void BatchDecompile(string dirPath, bool extractNativeTables, bool verbose)
 		{
 			Queue<string> CompileList = new Queue<string>();
 
@@ -141,6 +132,7 @@ namespace Decompiler
 
 			while (CompileList.Count > 0)
 			{
+				ScriptFile fileopen;
 				string scriptToDecode;
 
 				lock (CompileList)
@@ -148,9 +140,10 @@ namespace Decompiler
 					scriptToDecode = CompileList.Dequeue();
 				}
 
-				Console.WriteLine("Decompiling " + scriptToDecode + "...");
-
-				ScriptFile fileopen;
+				if(verbose)
+				{
+					Console.WriteLine("Decompiling " + scriptToDecode + "...");
+				}
 
 				try
 				{
