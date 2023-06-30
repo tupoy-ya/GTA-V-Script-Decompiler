@@ -3,9 +3,10 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Collections.Generic;
-#if OS_WINDOWS
-using System.Windows.Forms;
-#endif // OS_WINDOWS
+using System.Runtime.InteropServices;
+using Avalonia;
+using Avalonia.ReactiveUI;
+using Avalonia.Dialogs;
 using CommandLine;
 
 namespace Decompiler
@@ -50,12 +51,7 @@ namespace Decompiler
 
 			if (args.Length == 0)
 			{
-#if OS_WINDOWS
-				Application.EnableVisualStyles();
-				Application.SetHighDpiMode(HighDpiMode.SystemAware);
-				Application.SetCompatibleTextRenderingDefault(false);
-				Application.Run(new MainForm());
-#endif // OS_WINDOWS
+				BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 			}
 			else
 			{
@@ -63,6 +59,29 @@ namespace Decompiler
 				  .WithParsed(RunOptions)
 				  .WithNotParsed(HandleParseError);
 			}
+		}
+
+		/// <summary>
+		/// This method is needed for IDE previewer infrastructure
+		/// </summary>
+		public static AppBuilder BuildAvaloniaApp()
+		{
+			AppBuilder app = AppBuilder
+				.Configure<App>()
+				.UseReactiveUI()
+				.UsePlatformDetect()
+				.With(new X11PlatformOptions
+				{
+					UseDBusFilePicker = true,
+					UseDBusMenu = false
+				});
+
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
+			{
+				app = app.UseManagedSystemDialogs();
+			}
+
+			return app;
 		}
 
 		static void RunOptions(Options opts)

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Decompiler.Patches
 {
-    internal abstract class Patch
+    public abstract class Patch
     {
         protected Function Function;
 
@@ -23,7 +24,7 @@ namespace Decompiler.Patches
         public abstract bool ShouldEnablePatch(int start, int end);
         public abstract byte[] GetPatch(int start, int end);
 
-        public virtual bool GetData(int start, int end) => true;
+        public virtual async Task<bool> GetData(int start, int end) => true;
 
         public virtual void Reset() { }
     }

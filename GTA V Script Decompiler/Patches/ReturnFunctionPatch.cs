@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-#if OS_WINDOWS
-using System.Windows.Forms;
-#endif // OS_WINDOWS
+using System.Threading.Tasks;
+using MsgBox;
 
 namespace Decompiler.Patches
 {
@@ -47,33 +46,37 @@ namespace Decompiler.Patches
 
         public override bool ShouldShowPatch(int start, int end) => true;
 
-        public override bool GetData(int start, int end)
+        public override async Task<bool> GetData(int start, int end)
         {
             uint value = 0;
 
-#if OS_WINDOWS
             if (Function.Instructions[start].OriginalOpcode == Opcode.ENTER)
             {
-                MessageBox.Show("Cannot place function return directly on an ENTER, try placing it after the ENTER", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await MessageBox.Show(null, "Cannot place function return directly on an ENTER, try placing it after the ENTER", "Error", MessageBox.MessageBoxButtons.Ok);
+                return false;
             }
 
             if (Function.NumReturns > 1)
             {
-                MessageBox.Show("Cannot apply patch as this function returns multiple values", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await MessageBox.Show(null, "Cannot apply patch as this function returns multiple values", "Error", MessageBox.MessageBoxButtons.Ok);
                 return false;
             }
             else if (Function.NumReturns > 0)
             {
                 InputBox box = new();
-                box.Show("Function Return", "Enter value to return", "0");
+                if(await box.Show(null, "Enter value to return", "Function Return", InputBox.InputBoxButtons.OkCancel) == InputBox.InputBoxResult.Cancel)
+                {
+                    return false;
+                }
+
+                Console.WriteLine(box.Value);
 
                 if (!uint.TryParse(box.Value, out value))
                 {
-                    MessageBox.Show("Integer is invalid", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    await MessageBox.Show(null, "Integer is invalid", "Error", MessageBox.MessageBoxButtons.Ok);
                     return false;
                 }
             }
-#endif // OS_WINDOWS
 
             ReturnValue = value;
 

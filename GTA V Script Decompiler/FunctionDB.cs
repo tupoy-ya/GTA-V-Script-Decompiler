@@ -25,7 +25,7 @@ namespace Decompiler
         public FunctionDB()
         {
             var file = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
-                "functions.db");
+                "Assets/functions.db");
 
             var lines = File.Exists(file)
                 ? File.ReadAllLines(file)

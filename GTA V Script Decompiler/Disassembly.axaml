@@ -1,0 +1,34 @@
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Decompiler.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        x:CompileBindings="True"
+        x:Class="Decompiler.Disassembly"
+		MinWidth="200" MinHeight="100"
+		Height="725" Width="945"
+		Icon="/Assets/GTAV-Icon.png"
+        Title="Disassembly">
+
+	<!--We are using Compiled bindings. This is not mandatory but makes life easier. Read more about it here:-->
+	<!-- https://docs.avaloniaui.net/docs/data-binding/compiledbindings -->
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Tools">
+                <MenuItem Click="checkPatternUniquenessToolStripMenuItem_Click" Header="_Check Pattern Uniqueness"/>
+            </MenuItem>
+		</Menu>
+		<AvaloniaEdit:TextEditor
+			x:Name="disassemblyCodeBox"
+			SyntaxHighlighting="C++"
+			FontFamily="Cascadia Code,Consolas,Menlo,Monospace">
+            <AvaloniaEdit:TextEditor.ContextMenu>
+                <ContextMenu x:Name="ctxMenu"/>
+            </AvaloniaEdit:TextEditor.ContextMenu>
+        </AvaloniaEdit:TextEditor>
+    </DockPanel>
+
+</Window>

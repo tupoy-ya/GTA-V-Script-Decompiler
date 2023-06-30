@@ -1,0 +1,10 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Decompiler"
+             x:Class="Decompiler.App">
+
+    <Application.Styles>
+        <SimpleTheme />
+        <StyleInclude Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
+    </Application.Styles>
+</Application>

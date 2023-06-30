@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-#if OS_WINDOWS
-using System.Windows.Forms;
-#endif // OS_WINDOWS
+using System.Threading.Tasks;
+using MsgBox;
 
 namespace Decompiler.Patches
 {
@@ -65,7 +64,7 @@ namespace Decompiler.Patches
             return (end - start == 1) && (op == Opcode.PUSH_CONST_U8 || op == Opcode.PUSH_CONST_S16 || op == Opcode.PUSH_CONST_U32 || op == Opcode.PUSH_CONST_U24 || (op >= Opcode.PUSH_CONST_0 && op <= Opcode.PUSH_CONST_7));
         }
 
-        public override bool GetData(int start, int end)
+        public override async Task<bool> GetData(int start, int end)
         {
             var op = Function.Instructions[start].Opcode;
 
@@ -80,9 +79,8 @@ namespace Decompiler.Patches
             else if (op == Opcode.PUSH_CONST_U32)
                 constantType = ConstantType.U32;
 
-#if OS_WINDOWS
             InputBox box = new();
-            box.Show("Enter value", $"Enter new value (range 0 - {(uint)constantType})\nPrefix with $ to hash string");
+            await box.Show(null, "Enter value", $"Enter new value (range 0 - {(uint)constantType})\nPrefix with $ to hash string", InputBox.InputBoxButtons.OkCancel);
 
             uint value;
 
@@ -94,19 +92,18 @@ namespace Decompiler.Patches
             {
                 if (!uint.TryParse(box.Value, out value))
                 {
-                    MessageBox.Show("Integer is invalid", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    await MessageBox.Show(null, "Integer is invalid", "Error", MessageBox.MessageBoxButtons.Ok);
                     return false;
                 }
             }
 
             if (value > (uint)constantType)
             {
-                MessageBox.Show("Value out of range", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await MessageBox.Show(null, "Value out of range", "Error", MessageBox.MessageBoxButtons.Ok);
                 return false;
             }
 
             Value = value;
-#endif // OS_WINDOWS
 
             return true;
         }

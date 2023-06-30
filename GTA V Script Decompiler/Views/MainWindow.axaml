@@ -1,0 +1,102 @@
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Decompiler.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        x:CompileBindings="True"
+		x:DataType="vm:MainWindowViewModel"
+        x:Class="Decompiler.Views.MainWindow"
+		MinWidth="200" MinHeight="100"
+		Height="725" Width="945"
+		Icon="/Assets/GTAV-Icon.png"
+        Title="GTA V High Level Decompiler">
+
+	<!--We are using Compiled bindings. This is not mandatory but makes life easier. Read more about it here:-->
+	<!-- https://docs.avaloniaui.net/docs/data-binding/compiledbindings -->
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Click="OnOpenClick" Header="_Open"/>
+                <MenuItem Header="_Save"/>
+                <Separator/>
+				<MenuItem Header="Export _File"/>
+				<MenuItem Header="Export _Directory"/>
+                <Separator/>
+                <MenuItem Header="_Close"/>
+            </MenuItem>
+            <MenuItem Header="_Options">
+				<StackPanel>
+					<ComboBox SelectedIndex="0">
+						<ComboBoxItem>Int</ComboBoxItem>
+						<ComboBoxItem>Uint</ComboBoxItem>
+						<ComboBoxItem>Hex</ComboBoxItem>
+					</ComboBox>
+				</StackPanel>
+				<StackPanel>
+					<ComboBox SelectedIndex="0">
+						<ComboBoxItem>Disabled</ComboBoxItem>
+						<ComboBoxItem>Gettext Style</ComboBoxItem>
+						<ComboBoxItem>Comment Style</ComboBoxItem>
+					</ComboBox>
+				</StackPanel>
+				<Separator/>
+                <CheckBox BorderThickness="0">
+					_Show Array Size
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Reverse Hashes
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Include Native Namespace
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Declare Variables
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					Shift _Variables
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Global and Struct Hex Indexing
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Include Function Position
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					Include _Function Hash
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Uppercase Natives
+				</CheckBox>
+                <CheckBox BorderThickness="0">
+					_Export Tables
+				</CheckBox>
+				<Separator/>
+				<MenuItem Header="_Export Entities table"/>
+				<MenuItem Header="Reset Global _Types"/>
+            </MenuItem>
+			<MenuItem Header="_View">
+				<MenuItem Header="_Expand All Blocks"/>
+				<MenuItem Header="_Collaspe All Blocks"/>
+				<Separator/>
+                <CheckBox BorderThickness="0">
+					_Show Line Numbers
+				</CheckBox>
+				<Separator/>
+				<MenuItem Header="Navigate _Forward"/>
+				<MenuItem Header="Navigate _Backwards"/>
+            </MenuItem>
+        </Menu>
+		<AvaloniaEdit:TextEditor
+			x:Name="scriptCodeBox"
+			SyntaxHighlighting="C++"
+			FontFamily="Cascadia Code,Consolas,Menlo,Monospace">
+			<AvaloniaEdit:TextEditor.ContextMenu>
+				<ContextMenu x:Name="ctxMenu"/>
+			</AvaloniaEdit:TextEditor.ContextMenu>
+		</AvaloniaEdit:TextEditor>
+    </DockPanel>
+
+</Window>

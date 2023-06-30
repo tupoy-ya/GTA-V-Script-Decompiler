@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Decompiler</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -17,18 +19,9 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <ImportWindowsDesktopTargets>false</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <OutputType>WinExe</OutputType>
     <DefineConstants>OS_WINDOWS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
-    <TargetFramework>net6.0</TargetFramework>
-    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -39,7 +32,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>GTA V Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets/GTAV-Icon.ico</ApplicationIcon>
     <Nullable>annotations</Nullable>
     <AnalysisLevel>preview-all</AnalysisLevel>
   </PropertyGroup>
@@ -59,19 +52,8 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="GTA V Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <Content Include="Assets\*.*" CopyToOutputDirectory="PreserveNewest" />
+    <AvaloniaResource Include="Assets\GTAV-Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -82,31 +64,18 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="7.0.0-rc.2.22472.3" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
-    <PackageReference Include="FCTB" Version="2.16.24" />
-    <PackageReference Include="Microsoft.WindowsAPICodePack-Shell" Version="1.1.0" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="6.0.5" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+   <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-rc1.1" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.0-rc1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">
