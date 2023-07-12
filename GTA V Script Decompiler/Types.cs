@@ -56,6 +56,7 @@ namespace Decompiler
         public static readonly TypeInfo ESETPLAYERCONTROLFLAGS = new(6, "eSetPlayerControlFlags", "controlBs", "espcf", new(typeof(Enums.SetPlayerControlFlag), true));
         public static readonly TypeInfo ESCRIPTLOOKATFLAGS = new(6, "eScriptLookAtFlags", "lookatFlags", "eslf", new(typeof(Enums.ScriptLookatFlags), true));
         public static readonly TypeInfo ESCRIPTTASKHASH = new(6, "eScriptTaskHash", "taskHash", "esth", new(typeof(Enums.ScriptTaskHash)));
+        public static readonly TypeInfo ESPAWNLOCATION = new(6, "eSpawnLocation", "taskHash", "esl", new(typeof(Enums.SpawnLocation)));
         public static readonly TypeInfo EMPSTAT = new(6, "eMPStat", "stat", "emps", new(typeof(Enums.MPStat)));
         public static readonly TypeInfo EEVENTTYPE = new(6, "eEventType", "type", "eet", new(typeof(Enums.EventType)));
         public static readonly TypeInfo EVIEWMODE = new(6, "eViewMode", "mode", "evm", new(typeof(Enums.ViewMode)));
