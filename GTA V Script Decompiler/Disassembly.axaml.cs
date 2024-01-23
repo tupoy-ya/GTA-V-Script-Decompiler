@@ -148,7 +148,22 @@ namespace Decompiler
 			new[]{"PUSH_CONST_F5", ""},
 			new[]{"PUSH_CONST_F6", ""},
 			new[]{"PUSH_CONST_F7", ""},
-			new[]{"IS_BIT_SET", ""}
+			new[]{"IS_BIT_SET", ""},
+			new[]{"LOCAL_LOAD_S", ""},
+			new[]{"LOCAL_STORE_S", ""},
+			new[]{"LOCAL_STORE_SR", ""},
+			new[]{"STATIC_LOAD_S", ""},
+			new[]{"STATIC_STORE_S", ""},
+			new[]{"STATIC_STORE_SR", ""},
+			new[]{"LOAD_N_S", ""},
+			new[]{"STORE_N_S", ""},
+			new[]{"STORE_N_SR", ""},
+			new[]{"GLOBAL_LOAD_S", ""},
+			new[]{"GLOBAL_STORE_S", ""},
+			new[]{"GLOBAL_STORE_SR", ""},
+			new[]{"STATIC_U24", ""},
+			new[]{"STATIC_U24_LOAD", ""},
+			new[]{"STATIC_U24_STORE", ""}
 		};
 		private Function Function;
 		private Patch[] patches;
@@ -185,7 +200,10 @@ namespace Decompiler
 		{
 			var bytes = "";
 
-			bytes += ((uint)instruction.OriginalOpcode).ToString("X").PadLeft(2, '0');
+			if (Properties.Settings.Default.IsRDR2)
+                bytes += ((uint)instruction.UnmappedOpcode).ToString("X").PadLeft(2, '0');
+            else
+                bytes += ((uint)instruction.OriginalOpcode).ToString("X").PadLeft(2, '0');
 
 			var i = 0;
 			foreach (var op in instruction.Operands)
@@ -394,7 +412,7 @@ namespace Decompiler
 			if (result == InputBox.InputBoxResult.Cancel)
 				return;
 
-            var results = GetNumPatternResults(IB.Value);
+			var results = GetNumPatternResults(IB.Value);
 
 			if (results == 0)
 				await MessageBox.Show(null, "Cannot find pattern", "Error", MessageBox.MessageBoxButtons.Ok);
@@ -455,7 +473,7 @@ namespace Decompiler
 				Items.Add(new Avalonia.Controls.MenuItem { Header = $"Patch: {patch.GetName(start, end)}", Command = OnPatchClickCommand, CommandParameter = patch });
 
 				/*if (!patch.ShouldEnablePatch(start, end))
-                    patchButton.Enabled = false;*/
+					patchButton.Enabled = false;*/
 			}
 
 			_contextMenu.ItemsSource = Items;

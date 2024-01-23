@@ -143,14 +143,54 @@ namespace Decompiler
 				Directory.CreateDirectory(saveDirectory);
 
 			foreach (var file in Directory.GetFiles(dirPath, "*.ysc"))
-			{
-				CompileList.Enqueue(file);
-			}
+            {
+                CompileList.Enqueue(file);
+            }
 
-			foreach (var file in Directory.GetFiles(dirPath, "*.ysc.full"))
-			{
-				CompileList.Enqueue(file);
-			}
+            foreach (var file in Directory.GetFiles(dirPath, "*.osc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.dsc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.psc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.ssc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.ysc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.osc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.dsc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.psc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.ssc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
 
 			while (CompileList.Count > 0)
 			{

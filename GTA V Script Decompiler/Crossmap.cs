@@ -8,7 +8,7 @@ namespace Decompiler
     {
         public Dictionary<ulong, ulong> TranslationTable = new();
 
-        public ulong TranslateHash(ulong hash) => TranslationTable.TryGetValue(hash, out var newHash) ? newHash : hash;
+        public ulong TranslateHash(ulong hash) => (!Properties.Settings.Default.IsRDR2 && TranslationTable.TryGetValue(hash, out var newHash)) ? newHash : hash;
 
         public Crossmap()
             : base()
@@ -21,7 +21,7 @@ namespace Decompiler
                 var line = sr.ReadLine();
                 if (line.Length > 1)
                 {
-                    var val = line.Remove(line.IndexOfAny(new char[] { ':', '=', ',' }));
+                    var val = line.Remove(line.IndexOfAny(new char[] { ':', '=', ',' }, 0));
                     var nat = line[(val.Length + 1)..];
 
                     if (val.StartsWith("0x"))

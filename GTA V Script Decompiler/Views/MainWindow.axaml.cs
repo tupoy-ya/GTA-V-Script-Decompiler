@@ -90,7 +90,7 @@ namespace Decompiler.Views
 			{
 				Title = "Select file to decompile",
 				AllowMultiple = false,
-				FileTypeFilter = new FilePickerFileType[] { new("GTA V Script Files") { Patterns = new[] { "*.ysc", "*.ysc.full" } } },
+				FileTypeFilter = new FilePickerFileType[] { new("GTA V Script Files") { Patterns = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.ssc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.ssc.full" } } },
 				// SuggestedStartLocation = await StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(filename))
 			});
 
