@@ -46,10 +46,11 @@ namespace Decompiler.Views
 
 		private async Task GotoDeclaration(int func)
 		{
-			// This coases a crash if used twice.
-			// var num = Convert.ToInt32(func);
-			// _textEditor.TextArea.Caret.Line = num;
-			// _textEditor.TextArea.Caret.BringCaretToView();
+			// This causes a crash if used twice.
+			// EDIT: Ok now it just works for some reason.
+			var num = Convert.ToInt32(func);
+			_textEditor.TextArea.Caret.Line = num;
+			_textEditor.TextArea.Caret.BringCaretToView();
 		}
 
 		private void OnContextMenuOpening(object sender, CancelEventArgs e)
@@ -86,13 +87,13 @@ namespace Decompiler.Views
 				return;
 			}
 
-			var file = await StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
-			{
+			var file = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
 				Title = "Select file to decompile",
 				AllowMultiple = false,
 				FileTypeFilter = new FilePickerFileType[] { new("GTA V Script Files") { Patterns = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.ssc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.ssc.full" } } },
 				// SuggestedStartLocation = await StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(filename))
-			});
+			}).ConfigureAwait(true);
 
 			if (file?.Count == 0)
 			{
@@ -107,7 +108,7 @@ namespace Decompiler.Views
 			progressBar.Show();
 
 			OpenFile = new ScriptFile(File.OpenRead(filename));
-			await OpenFile.Decompile(progressBar);
+			await OpenFile.Decompile(progressBar).ConfigureAwait(true);;
 			progressBar.Close();
 
 			Console.WriteLine("Decompiled script file. Time taken: " + (DateTime.Now - Start).ToString());
@@ -127,7 +128,7 @@ namespace Decompiler.Views
 			Console.WriteLine("Ready. Time taken: " + (DateTime.Now - Start).ToString());
 		}
 
-		private bool islegalchar(char c) => char.IsLetterOrDigit(c) || c == '_';
+		private static bool islegalchar(char c) => char.IsLetterOrDigit(c) || c == '_';
 
 		private string GetWordAtCursor()
 		{

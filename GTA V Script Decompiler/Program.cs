@@ -69,17 +69,7 @@ namespace Decompiler
 			AppBuilder app = AppBuilder
 				.Configure<App>()
 				.UseReactiveUI()
-				.UsePlatformDetect()
-				.With(new X11PlatformOptions
-				{
-					UseDBusFilePicker = true,
-					UseDBusMenu = false
-				});
-
-			if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
-			{
-				app = app.UseManagedSystemDialogs();
-			}
+				.UsePlatformDetect();
 
 			return app;
 		}

@@ -92,7 +92,8 @@
 		<AvaloniaEdit:TextEditor
 			x:Name="scriptCodeBox"
 			SyntaxHighlighting="C++"
-			FontFamily="Cascadia Code,Consolas,Menlo,Monospace">
+			FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
+			FontWeight="Light">
 			<AvaloniaEdit:TextEditor.ContextMenu>
 				<ContextMenu x:Name="ctxMenu"/>
 			</AvaloniaEdit:TextEditor.ContextMenu>
