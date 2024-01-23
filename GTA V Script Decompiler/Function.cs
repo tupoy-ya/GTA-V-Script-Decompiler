@@ -636,7 +636,7 @@ Start:
 						if (CodeBlock[Offset] <= 129)
 							AddInstruction(curoff, new Instruction(CodeBlock[Offset], curoff));
 						else
-							throw new Exception("Unexpected Opcode");
+							throw new Exception("Unexpected Opcode: " + CodeBlock[Offset]);
 						break;
 				}
 

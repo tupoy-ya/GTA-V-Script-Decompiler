@@ -91,7 +91,7 @@ namespace Decompiler
             {
                 if (Header.StaticsCount > 0)
                 {
-                    savestream.WriteLine("#region Local Var");
+                    savestream.WriteLine("#pragma region Local Var");
                     i++;
                     foreach (var s in Statics.GetDeclaration())
                     {
@@ -99,7 +99,7 @@ namespace Decompiler
                         i++;
                     }
 
-                    savestream.WriteLine("#endregion");
+                    savestream.WriteLine("#pragma endregion Local Var");
                     savestream.WriteLine("");
                     i += 2;
                 }
