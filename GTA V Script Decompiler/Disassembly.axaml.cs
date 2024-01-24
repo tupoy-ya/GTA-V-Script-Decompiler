@@ -331,7 +331,7 @@ namespace Decompiler
 
 			if (length < bytes.Length)
 			{
-				await MessageBox.Show(null, "Generated patch is out of bounds", "Error", MessageBox.MessageBoxButtons.Ok);
+                await MessageBox.Show(null, "Generated patch is out of bounds", "Error", MessageBox.MessageBoxButtons.Ok);
 				return;
 			}
 
@@ -352,8 +352,7 @@ namespace Decompiler
 
 			var option = await MessageBox.Show(null, $"Pattern: {pattern}{Environment.NewLine}Patch: {patch}{Environment.NewLine}Offset: {off}{Environment.NewLine}Copy to clipboard?", "Patch Generated", MessageBox.MessageBoxButtons.YesNo);
 			if (option == MessageBox.MessageBoxResult.Yes)
-				Console.WriteLine($"\"{pattern}\", {off}, {patch}");
-			//Clipboard.SetText($"\"{pattern}\", {off}, {patch}");
+				await Clipboard.SetTextAsync($"\"{pattern}\", {off}, {patch}");
 		}
 
 		private string DisassembleFunction()
@@ -430,8 +429,7 @@ namespace Decompiler
 			{
 				var option = await MessageBox.Show(null, $"The pattern is {pattern}{Environment.NewLine}Copy to clipboard?", "Pattern Found", MessageBox.MessageBoxButtons.YesNo);
 				if (option == MessageBox.MessageBoxResult.Yes)
-					Console.WriteLine(pattern);
-				//Clipboard.SetText(pattern);
+					await Clipboard.SetTextAsync(pattern);
 			}
 			else
 			{

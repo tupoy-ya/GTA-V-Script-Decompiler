@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Decompiler.Hooks;
 
 namespace Decompiler
 {
@@ -12,12 +13,12 @@ namespace Decompiler
         public List<byte> CodeTable;
         public StringTable StringTable;
         public NativeTable X64NativeTable;
-        private int offset = 0;
+        private int offset;
         public List<Function> Functions;
         private readonly Stream file;
         public ScriptHeader Header;
         internal VariableStorage Statics;
-        internal ProgressBar? ProgressBar = null;
+        internal ProgressBar? ProgressBar;
 
         public Dictionary<int, Function> FunctionAtLocation = new();
         public Dictionary<Function, int> FunctionLines = new();
@@ -61,12 +62,11 @@ namespace Decompiler
                         func.Hook = hook;
             }
 
-            bar?.SetMax(Functions.Count + 1);
+            ProgressBar?.SetMax(Functions.Count + 1);
 
             foreach (var func in Functions)
             {
-                await Task.Run(
-                    () => func.Decompile());
+                await Task.Run(() => func.Decompile());
             }
         }
 

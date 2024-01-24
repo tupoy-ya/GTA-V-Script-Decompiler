@@ -20,12 +20,12 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Click="OnOpenClick" Header="_Open"/>
-                <MenuItem Header="_Save"/>
+                <MenuItem Click="OnSaveClick" Header="_Save"/>
                 <Separator/>
-				<MenuItem Header="Export _File"/>
-				<MenuItem Header="Export _Directory"/>
+				<MenuItem Click="OnExportFileClick" Header="Export _File"/>
+				<MenuItem Click="OnExportDirClick" Header="Export _Directory"/>
                 <Separator/>
-                <MenuItem Header="_Close"/>
+                <MenuItem Click="OnCloseClick" Header="_Close"/>
             </MenuItem>
             <MenuItem Header="_Options">
 				<StackPanel>
@@ -43,45 +43,45 @@
 					</ComboBox>
 				</StackPanel>
 				<Separator/>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding showArraySize}" ToolTip.Tip="Shows the size of the items in an array &#xA;uLocal_5[index &lt;item_size&gt;]&#xA;an array of vector3s would look like this&#xA;vStatic_1[0 &lt;3&gt;];" BorderThickness="0">
 					_Show Array Size
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding reverseHashes}" ToolTip.Tip="Reverse known hashes into their text equivalent&#xA;e.g 0xB779A091 -&gt; joaat(&quot;adder&quot;)" BorderThickness="0">
 					_Reverse Hashes
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding showNativeNamespace}" BorderThickness="0">
 					_Include Native Namespace
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding declareVariables}" ToolTip.Tip="Include Variable declarations at the start of file and functions" BorderThickness="0">
 					_Declare Variables
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding shiftVariables}" BorderThickness="0">
 					Shift _Variables
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding hexIndex}" BorderThickness="0">
 					_Global and Struct Hex Indexing
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding showFunctionPointers}" BorderThickness="0">
 					_Include Function Position
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding showFunctionHash}" ToolTip.Tip="Shows the persistent hash of the function. Meant to be used for function database building" BorderThickness="0">
 					Include _Function Hash
 				</CheckBox>
-                <CheckBox BorderThickness="0">
+                <CheckBox IsChecked="{Binding uppercaseNatives}" BorderThickness="0">
 					_Uppercase Natives
 				</CheckBox>
-                <CheckBox BorderThickness="0">
-					_Export Tables
+                <CheckBox IsChecked="{Binding isRDR2}" ToolTip.Tip="The decompiler will restart if this setting is changed" BorderThickness="0">
+					RDR_2
 				</CheckBox>
 				<Separator/>
-				<MenuItem Header="_Export Entities table"/>
+				<MenuItem ToolTip.Tip="Export The entites file (entities_exp.dat) built into the program so you can edit it.&#xA;The program will search for entities.dat in its directory and use that for reversing hashes" Header="_Export Entities table"/>
 				<MenuItem Header="Reset Global _Types"/>
             </MenuItem>
 			<MenuItem Header="_View">
 				<MenuItem Header="_Expand All Blocks"/>
 				<MenuItem Header="_Collaspe All Blocks"/>
 				<Separator/>
-                <CheckBox BorderThickness="0">
+                <CheckBox Click="OnLineNumbersClick" IsChecked="{Binding lineNumbers}" BorderThickness="0">
 					_Show Line Numbers
 				</CheckBox>
 				<Separator/>

@@ -6,30 +6,40 @@ namespace Decompiler
 {
     public partial class ProgressBar : Window
     {
-        public int Minimum;
-        public int Maximum;
-        private double Value = 0;
-        private double ValueInternal = 0;
+        public int Min;
+        public int Max;
+        private int Value = 0;
+        private Avalonia.Controls.ProgressBar _progressbar;
 
-        public ProgressBar()
+        public ProgressBar(string name, int min, int max)
         {
             AvaloniaXamlLoader.Load(this);
+            _progressbar = this.FindControl<Avalonia.Controls.ProgressBar>("progressbar");
+            _progressbar.Value = min;
+            _progressbar.Maximum = max;
+            _progressbar.Minimum = min;
+            Title = name;
+            Min = min;
+            Max = max;
+            Value = min;
         }
 
         public void SetMax(int max)
         {
-            Maximum = 100;
+            Max = max;
+            _progressbar.Maximum = max;
         }
 
-        public void SetValue(double value)
+        public void SetValue(int value)
         {
-            ValueInternal = value;
-            Value = (ValueInternal / Maximum) * 100;
+            Value = value;
+            Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => _progressbar.Value = value);
         }
 
         public void IncrementValue()
         {
-            SetValue(ValueInternal + 1);
+            Value = Value + 1;
+            Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => _progressbar.Value = Value);
         }
     }
 }
