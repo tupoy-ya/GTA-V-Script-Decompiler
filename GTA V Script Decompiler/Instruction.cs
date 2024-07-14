@@ -345,7 +345,7 @@ namespace Decompiler
             Opcode = Opcode.NOP;
         }
 
-        public int UnmappedOpcode { get { return ShuffledOpcodes.First(x => x.Value == Opcode).Key; } }
+        public int UnmappedOpcode { get { return ShuffledOpcodes.First(x => x.Value == OriginalOpcode).Key; } }
 
 		public int Offset { get; }
 
