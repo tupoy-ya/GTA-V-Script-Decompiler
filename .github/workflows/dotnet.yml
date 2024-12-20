@@ -13,7 +13,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 9.0.x
         
     - name: Restore dependencies
       run: dotnet restore
@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Release-Windows
-        path: "GTA V Script Decompiler/bin/Release/net6.0-windows"
+        path: "GTA V Script Decompiler/bin/Release/net9.0-windows"
         if-no-files-found: error
 
   build_linux:
@@ -56,5 +56,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Release-Linux
-        path: "GTA V Script Decompiler/bin/Release/net6.0"
+        path: "GTA V Script Decompiler/bin/Release/net9.0"
         if-no-files-found: error
