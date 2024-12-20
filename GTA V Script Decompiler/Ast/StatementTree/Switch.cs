@@ -15,14 +15,24 @@ namespace Decompiler.Ast.StatementTree
             BreakOffset = breakOffset;
             SwitchVal = switchVal;
 
-            foreach (var p in cases)
+            Case? lastCase = null;
+
+            foreach (var (loc, stmts) in cases)
             {
-                foreach (var @case in p.Value)
+                foreach (var @case in stmts)
                 {
                     @case.HintType(ref SwitchVal.GetTypeContainer());
                 }
 
-                Statements.Add(new Case(Function, this, Function.CodeOffsetToFunctionOffset(p.Key), p.Value, breakOffset));
+                var caseStart = Function.CodeOffsetToFunctionOffset(loc);
+
+                if (lastCase != null)
+                {
+                    lastCase.EndOffset = caseStart;
+                }
+
+                lastCase = new Case(Function, this, caseStart, breakOffset, stmts, breakOffset);
+                Statements.Add(lastCase);
             }
         }
 

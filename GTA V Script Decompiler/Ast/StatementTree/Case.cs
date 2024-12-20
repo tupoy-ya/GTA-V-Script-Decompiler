@@ -5,13 +5,15 @@ namespace Decompiler.Ast.StatementTree
 {
     internal class Case : Tree
     {
-        public readonly int BreakOffset;
-        private readonly int StartOffset;
+        public readonly int BreakOffset; 
+        public readonly int StartOffset;
+        public int EndOffset; // offset to the beginning of the next case stmt (or break if it's the last case stmt)
         private readonly List<AstToken> Cases;
 
-        public Case(Function function, Tree parent, int offset, List<AstToken> cases, int breakOffset) : base(function, parent, offset)
+        public Case(Function function, Tree parent, int offset, int end_offset, List<AstToken> cases, int breakOffset) : base(function, parent, offset)
         {
             StartOffset = offset;
+            EndOffset = end_offset;
             BreakOffset = breakOffset;
             Cases = cases;
         }
@@ -26,13 +28,10 @@ namespace Decompiler.Ast.StatementTree
                 return true;
             }
 
-            foreach (var p in (Parent as Switch).Cases)
+            if (Offset == EndOffset)
             {
-                if (Function.CodeOffsetToFunctionOffset(p.Key) != StartOffset && Function.CodeOffsetToFunctionOffset(p.Key) == Offset)
-                {
-                    Statements.Add(new Attribute(Function, "fallthrough"));
-                    return true;
-                }
+                Statements.Add(new Attribute(Function, "fallthrough"));
+                return true;
             }
 
             return false;

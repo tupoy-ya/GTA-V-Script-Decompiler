@@ -13,6 +13,8 @@
             Lhs.HintType(ref Types.INT.GetContainer());
         }
 
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
+
         public override ref TypeContainer GetTypeContainer() => ref Types.INT.GetContainer();
 
         public bool IsComplexOperand(AstToken operand) => operand is IntegerArithmetic && GetType() != operand.GetType();
@@ -80,6 +82,8 @@
             this.value.HintType(ref Types.INT.GetContainer());
         }
 
+        public override bool HasSideEffects() => value.HasSideEffects();
+
         public override ref TypeContainer GetTypeContainer() => ref Types.INT.GetContainer();
 
         public override string ToString() => value is IntegerArithmetic ? $"-({value})" : $"-{value}";
@@ -93,6 +97,8 @@
             this.value = value;
             this.value.HintType(ref Types.BOOL.GetContainer());
         }
+
+        public override bool HasSideEffects() => value.HasSideEffects();
 
         public override ref TypeContainer GetTypeContainer() => ref Types.BOOL.GetContainer();
 
