@@ -64,10 +64,15 @@ namespace Decompiler
 
             ProgressBar?.SetMax(Functions.Count + 1);
 
+            //StreamWriter fw = new(File.OpenWrite("functions.db"));
             foreach (var func in Functions)
             {
                 await Task.Run(() => func.Decompile());
+                
+                //fw.WriteLine("0x" + func.Hash.ToString("X") + " NAME " + func.Name);
             }
+            //fw.Flush();
+			//fw.Close();
         }
 
         public void Save(string filename)
@@ -154,13 +159,13 @@ namespace Decompiler
 
         private void AddFunction(int start1, int start2)
         {
-            var namelen = CodeTable[start1 + 4];
+            var namelen = CodeTable[start1 + 4]-3;
             var name = "";
             if (namelen > 0)
             {
                 for (var i = 0; i < namelen; i++)
                 {
-                    name += (char)CodeTable[start1 + 5 + i];
+                    name += (char)CodeTable[start1 + 7 + i];
                 }
 
                 foreach (var fun in Functions)
@@ -175,14 +180,16 @@ namespace Decompiler
             int pcount = CodeTable[offset + 1];
             int tmp1 = CodeTable[offset + 2], tmp2 = CodeTable[offset + 3];
             var vcount = (tmp2 << 0x8) | tmp1;
+            // Console.WriteLine(name + " Num params: " + pcount + " Namelen: " + namelen + " Offset1: " + start1 + " Offset2: " + start2);
             if (vcount < 0)
             {
                 throw new Exception("Invalid local count");
             }
 
-            var temp = start1 + 5 + namelen;
+            var temp = start1 + 7 + namelen;
             while (Instruction.MapOpcode(CodeTable[temp]) != Opcode.LEAVE)
             {
+                // Console.WriteLine(name + " Opcode: " + Instruction.MapOpcode(CodeTable[temp]) + " " + ((int)Instruction.MapOpcode(CodeTable[temp])).ToString("X"));
                 switch (Instruction.MapOpcode(CodeTable[temp]))
                 {
                     case Opcode.PUSH_CONST_U8: temp += 1; break;
@@ -285,6 +292,7 @@ namespace Decompiler
             var returnpos = -3;
             while (offset < CodeTable.Count)
             {
+                // Console.WriteLine("GetFunctions: Offset: " + offset.ToString("X") + " Opcode: " + Instruction.MapOpcode(CodeTable[offset]));
                 switch (Instruction.MapOpcode(CodeTable[offset]))
                 {
                     case Opcode.PUSH_CONST_U8: advpos(1); break;

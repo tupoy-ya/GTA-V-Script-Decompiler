@@ -17,9 +17,18 @@
             if (value.IsPointer())
                 sep = ".";
 
-            return offset is ConstantInt
-                ? "&(" + value.ToPointerString() + sep + "f_" + offset.ToString() + ")"
-                : "&(" + value.ToPointerString() + sep + "f_[" + offset.ToString() + "])";
+            if (Program.Options != null && Program.Options.Diffmode)
+            {
+                return offset is ConstantInt
+                    ? "&(" + value.ToPointerString() + sep + "f_diffmode)"
+                    : "&(" + value.ToPointerString() + sep + "f_[diffmode])";
+            }
+            else
+            {
+                return offset is ConstantInt
+                    ? "&(" + value.ToPointerString() + sep + "f_" + offset.ToString() + ")"
+                    : "&(" + value.ToPointerString() + sep + "f_[" + offset.ToString() + "])";
+            }
         }
 
         public override string ToPointerString()
@@ -28,9 +37,18 @@
             if (value.IsPointer())
                 sep = ".";
 
-            return offset is ConstantInt
-                ? value.ToPointerString() + sep + "f_" + (offset as ConstantInt).GetValue()
-                : value.ToPointerString() + sep + "f_[" + offset.ToString() + "]";
+            if (Program.Options != null && Program.Options.Diffmode)
+            {
+                return offset is ConstantInt
+                    ? value.ToPointerString() + sep + "f_diffmode"
+                    : value.ToPointerString() + sep + "f_[diffmode]";
+            }
+            else
+            {
+                return offset is ConstantInt
+                    ? value.ToPointerString() + sep + "f_" + (offset as ConstantInt).GetValue()
+                    : value.ToPointerString() + sep + "f_[" + offset.ToString() + "]";
+            }
         }
 
         public override bool CanGetGlobalIndex() => value.CanGetGlobalIndex() && offset is ConstantInt;
@@ -57,7 +75,10 @@
             if (value.IsPointer())
                 sep = ".";
 
-            return value.ToPointerString() + sep + "f_" + offset.ToString();
+            if (Program.Options != null && Program.Options.Diffmode)
+                return value.ToPointerString() + sep + "f_diffmode";
+            else
+                return value.ToPointerString() + sep + "f_" + offset.ToString();
         }
 
         public override bool CanGetGlobalIndex() => value.CanGetGlobalIndex();
@@ -88,7 +109,11 @@
             if (value.IsPointer())
                 sep = ".";
 
-            return value.ToPointerString() + sep + "f_" + offset.ToString() + " = " + storedValue.ToString() + ";";
+            if (Program.Options != null && Program.Options.Diffmode)
+                return value.ToPointerString() + sep + "f_diffmode = " + storedValue.ToString() + ";";
+            else
+                return value.ToPointerString() + sep + "f_" + offset.ToString() + " = " + storedValue.ToString() + ";";
+                
         }
     }
 }

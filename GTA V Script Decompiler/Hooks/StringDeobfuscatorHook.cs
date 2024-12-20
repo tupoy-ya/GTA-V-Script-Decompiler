@@ -65,6 +65,7 @@ namespace Decompiler.Hooks
 
         public override bool Hook(Function function, List<AstToken> args, Stack stack)
         {
+            /*
             var pushSize = function.Hash switch
             {
                 REORDER_STRING_4_24_HASH => 6,
@@ -80,6 +81,8 @@ namespace Decompiler.Hooks
 
             for (var i = 0; i < (pushSize - 1); i++)
                 stack.Push(new String(function, ""));
+
+            */
 
             return true;
         }

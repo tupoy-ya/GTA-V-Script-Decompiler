@@ -324,6 +324,8 @@ namespace Decompiler
 			if (DecodeStarted)
 				return;
 
+			// Console.WriteLine("Function decoding: " + Name + " NumParams: " + NumParams);
+
 			DecodeStarted = true;
 			if (Decoded)
 				return;
@@ -334,6 +336,7 @@ namespace Decompiler
 
 			Decoded = true;
 			ScriptFile.NotifyFunctionDecompiled();
+			// Console.WriteLine("Function decoded: " + Name + " NumParams: " + NumParams);
 		}
 
 		/// <summary>
@@ -522,13 +525,14 @@ Start:
 		/// </summary>
 		public void BuildInstructions()
 		{
-			Offset = CodeBlock[4];
+			Offset = CodeBlock[4] + 5;
 			Instructions = new List<Instruction>();
 			InstructionMap = new Dictionary<int, int>();
 			int curoff;
 			while (Offset < CodeBlock.Count)
 			{
 				curoff = Offset;
+				// Console.WriteLine("BuildInstructions: Name: " + Name + " Offset: " + Offset.ToString("X") + " Opcode: " + Instruction.MapOpcode(CodeBlock[Offset]));
 				switch (Instruction.MapOpcode(CodeBlock[Offset]))
 				{
                     case Opcode.PUSH_CONST_U8:
@@ -652,6 +656,9 @@ Start:
 
 			Hash = GetFunctionHash();
 			Mk2Hash = GetFunctionHash(true);
+
+			if(Program.Options.FunctionHashNames)
+				Name = $"func_0x{Hash.ToString("X")}";
 		}
 
 		/// <summary>
@@ -681,6 +688,7 @@ Start:
 
 			while (true)
 			{
+				// Console.WriteLine("Name: " + Name + " Opcode: " + Instructions[tree.Offset].Opcode + " (" + ((int)Instructions[tree.Offset].Opcode) + ")" + " Offset: " + tree.Offset);
 				switch (Instructions[tree.Offset].Opcode)
 				{
 					case Opcode.NOP:

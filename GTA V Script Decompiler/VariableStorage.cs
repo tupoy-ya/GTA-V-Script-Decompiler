@@ -76,9 +76,16 @@ namespace Decompiler
 
 			try
 			{
-				return Program.ShouldShiftVariables
-					? name + VarRemapper[(int)index].ToString()
-					: name + (listType == ListType.Statics && index >= scriptParamStart ? index - scriptParamStart : index).ToString();
+				if (Program.Options != null && Program.Options.Diffmode)
+				{
+					return listType == ListType.Statics ? name + "diffmode" : name + index;
+				}
+				else
+				{
+					return Program.ShouldShiftVariables
+						? name + VarRemapper[(int)index].ToString()
+						: name + (listType == ListType.Statics && index >= scriptParamStart ? index - scriptParamStart : index).ToString();
+				}
 			}
 			catch (KeyNotFoundException)
 			{

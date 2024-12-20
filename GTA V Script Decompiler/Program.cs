@@ -16,9 +16,11 @@ namespace Decompiler
 		public static Crossmap Crossmap;
 		public static NativeDB NativeDB;
 		public static FunctionDB FunctionDB;
+		public static GlobalDB GlobalDB;
 		public static TextDB TextDB;
 		public static GlobalTypeMgr GlobalTypeMgr;
 		public static Hashes Hashes;
+		public static Options Options;
 
 		public static FunctionHook[] FunctionHooks = FunctionHook.GetHooks();
 		public static NativeHook[] NativeHooks = NativeHook.GetHooks();
@@ -45,19 +47,19 @@ namespace Decompiler
 
 			FunctionDB = new FunctionDB();
 
+			GlobalDB = new GlobalDB();
+
 			TextDB = new TextDB();
 
 			GlobalTypeMgr = new GlobalTypeMgr();
 
-			if (args.Length == 0)
-			{
-				BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-			}
-			else
-			{
-				CommandLine.Parser.Default.ParseArguments<Options>(args)
+			CommandLine.Parser.Default.ParseArguments<Options>(args)
 				  .WithParsed(RunOptions)
 				  .WithNotParsed(HandleParseError);
+
+			if (args.Length == 0 || Options.Gui)
+			{
+				BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 			}
 		}
 
@@ -76,19 +78,22 @@ namespace Decompiler
 
 		static void RunOptions(Options opts)
 		{
+			Options = opts;
+			if (opts.FileName == null) return;
+
 			if (opts.Recursive)
 			{
-				BatchDecompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose);
+				BatchDecompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose, opts.OutputFile);
 			}
 			else
 			{
-				Decompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose);
+				Decompile(opts.FileName, !opts.DontExtractNativeTables, opts.Verbose, opts.OutputFile);
 			}
 
 			Console.WriteLine("All done & saved!");
 		}
 
-		static void Decompile(string fileName, bool extractNativeTables, bool verbose)
+		static void Decompile(string fileName, bool extractNativeTables, bool verbose, string? output_filename = null)
 		{
 			ScriptFile fileopen;
 			var Start = DateTime.Now;
@@ -120,15 +125,16 @@ namespace Decompiler
 			}
 
 			Console.WriteLine("Decompiled in " + (DateTime.Now - Start).ToString());
-			fileopen.Save(File.OpenWrite(fileName + ".c"), true);
+			fileopen.Save(File.OpenWrite(string.IsNullOrEmpty(output_filename) ? fileName + ".c" : output_filename ), true);
+			// TODO: This doesn't work for some reason!
 		}
 
-		static void BatchDecompile(string dirPath, bool extractNativeTables, bool verbose)
+		static void BatchDecompile(string dirPath, bool extractNativeTables, bool verbose, string? output_filename = null)
 		{
 			Queue<string> CompileList = new Queue<string>();
 
 			var Start = DateTime.Now;
-			var saveDirectory = Path.Combine(dirPath, "exported");
+			var saveDirectory = Path.Combine(dirPath, string.IsNullOrEmpty(output_filename) ? "exported" : output_filename);
 			if (!Directory.Exists(saveDirectory))
 				Directory.CreateDirectory(saveDirectory);
 
