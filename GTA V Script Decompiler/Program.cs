@@ -158,7 +158,7 @@ namespace Decompiler
                 CompileList.Enqueue(file);
             }
 
-            foreach (var file in Directory.GetFiles(dirPath, "*.ssc"))
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc"))
             {
                 CompileList.Enqueue(file);
             }
@@ -183,12 +183,52 @@ namespace Decompiler
                 CompileList.Enqueue(file);
             }
 
-            foreach (var file in Directory.GetFiles(dirPath, "*.ssc.full"))
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc.full"))
             {
                 CompileList.Enqueue(file);
             }
 
-			while (CompileList.Count > 0)
+            foreach (var file in Directory.GetFiles(dirPath, "*.dsc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.psc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.ysc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.osc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.dsc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.psc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc.full"))
+            {
+                CompileList.Enqueue(file);
+            }
+
+            while (CompileList.Count > 0)
 			{
 				ScriptFile fileopen;
 				string scriptToDecode;

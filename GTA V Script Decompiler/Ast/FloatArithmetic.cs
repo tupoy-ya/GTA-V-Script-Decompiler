@@ -13,6 +13,7 @@
             Lhs.HintType(ref Types.FLOAT.GetContainer());
         }
 
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
         public override ref TypeContainer GetTypeContainer() => ref Types.FLOAT.GetContainer();
 
         public bool IsComplexOperand(AstToken operand) => operand is FloatArithmetic && GetType() != operand.GetType();
@@ -79,6 +80,8 @@
             this.value = value;
             this.value.HintType(ref Types.FLOAT.GetContainer());
         }
+
+        public override bool HasSideEffects() => value.HasSideEffects();
 
         public override ref TypeContainer GetTypeContainer() => ref Types.FLOAT.GetContainer();
 

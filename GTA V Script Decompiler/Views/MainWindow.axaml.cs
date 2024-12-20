@@ -115,7 +115,7 @@ namespace Decompiler.Views
 			if (!StorageProvider.CanOpen)
 				return;
 
-			var file_extensions = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.ssc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.ssc.full" };
+			var file_extensions = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.zsc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.zsc.full" };
 			var file = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
 				Title = "Select file to decompile",
@@ -159,7 +159,7 @@ namespace Decompiler.Views
 			if (!StorageProvider.CanOpen)
 				return;
 
-			var file_extensions = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.ssc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.ssc.full" };
+			var file_extensions = new[] { "*.ysc", "*.osc", "*.dsc", "*.psc", "*.zsc", "*.ysc.full", "*.osc.full", "*.dsc.full", "*.psc.full", "*.zsc.full" };
 			var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
 				Title = "Select file to decompile",
@@ -278,7 +278,7 @@ namespace Decompiler.Views
                 CompileList.Enqueue(file);
             }
 
-            foreach (var file in Directory.GetFiles(dirPath, "*.ssc"))
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc"))
             {
                 CompileList.Enqueue(file);
             }
@@ -303,7 +303,7 @@ namespace Decompiler.Views
                 CompileList.Enqueue(file);
             }
 
-            foreach (var file in Directory.GetFiles(dirPath, "*.ssc.full"))
+            foreach (var file in Directory.GetFiles(dirPath, "*.zsc.full"))
             {
                 CompileList.Enqueue(file);
             }

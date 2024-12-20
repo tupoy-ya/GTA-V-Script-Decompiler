@@ -110,7 +110,7 @@ namespace Decompiler
                 ? JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, NativeDBEntry>>>(File.ReadAllText(file))
                 : JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, NativeDBEntry>>>(native_resource);
 
-            entries = new();
+            entries = [];
 
             NativeTypeOverride.Initialize();
 

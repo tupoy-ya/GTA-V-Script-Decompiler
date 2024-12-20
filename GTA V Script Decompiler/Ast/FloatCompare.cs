@@ -15,6 +15,7 @@
 
         protected abstract string Operator { get; }
 
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
         public override ref TypeContainer GetTypeContainer() => ref Types.BOOL.GetContainer();
 
         public override string ToString() => $"{Lhs} {Operator} {Rhs}";

@@ -11,6 +11,8 @@
             Lhs.HintType(ref Rhs.GetTypeContainer());
         }
 
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
+
         private bool IsLogicalOperation() => Lhs is not ConstantInt && Rhs is not ConstantInt;
 
         public override ref TypeContainer GetTypeContainer()
@@ -33,6 +35,8 @@
             Lhs.HintType(ref Rhs.GetTypeContainer());
         }
 
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
+
         private bool IsLogicalOperation() => Lhs is not ConstantInt && Rhs is not ConstantInt;
 
         public override ref TypeContainer GetTypeContainer()
@@ -53,6 +57,8 @@
             Lhs = lhs;
             Rhs = rhs;
         }
+
+        public override bool HasSideEffects() => Lhs.HasSideEffects() || Rhs.HasSideEffects();
 
         public override ref TypeContainer GetTypeContainer() => ref Types.INT.GetContainer();
 

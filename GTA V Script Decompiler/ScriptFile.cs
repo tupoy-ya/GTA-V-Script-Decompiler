@@ -165,8 +165,13 @@ namespace Decompiler
             {
                 for (var i = 0; i < namelen; i++)
                 {
-                    name += (char)CodeTable[start1 + 7 + i];
+                    var chr = (char)CodeTable[start1 + 5 + i];
+                    if (chr != '\0')
+                        name += chr;
                 }
+
+                if (name.StartsWith("__", StringComparison.Ordinal))
+                    name = name.TrimStart('_');
 
                 foreach (var fun in Functions)
                     if (fun.Name == name)

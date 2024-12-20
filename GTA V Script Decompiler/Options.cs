@@ -25,10 +25,10 @@ namespace Decompiler
 		[Option('g', "gui", Default = false, HelpText = "Run with gui enabled.")]
 		public bool Gui { get; set; }
 
-		[Option('h', "function_hash_names", Default = false, HelpText = "Use function hashes for names.")]
+		[Option('h', "function_hash_names", Default = false, HelpText = "Use function hashes as names.")]
 		public bool FunctionHashNames { get; set; }
 
-		[Option('v', "verbose", HelpText = "Show wich file is currently being decompiled.")]
+		[Option('v', "verbose", HelpText = "Show which file is currently being decompiled.")]
 		public bool Verbose { get; set; }
 	}
 }
