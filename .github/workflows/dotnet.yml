@@ -25,7 +25,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Release-Windows
         path: "GTA V Script Decompiler/bin/Release/net9.0-windows"
@@ -53,7 +53,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Release-Linux
         path: "GTA V Script Decompiler/bin/Release/net9.0"
