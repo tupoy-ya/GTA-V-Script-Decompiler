@@ -280,7 +280,7 @@ namespace Decompiler
 
 				foreach (var op in Function.Instructions[i].Operands)
 				{
-					if (Function.Instructions[i].OriginalOpcode is Opcode.LOCAL_U8 or Opcode.LOCAL_U8_LOAD or Opcode.LOCAL_U8_STORE or Opcode.ENTER or Opcode.LEAVE)
+					if (Function.Instructions[i].OriginalOpcode is Opcode.LOCAL_U8 or Opcode.LOCAL_U8_LOAD or Opcode.LOCAL_U8_STORE or Opcode.ENTER or Opcode.LEAVE or Opcode.J or Opcode.JZ or Opcode.IEQ_JZ or Opcode.IGE_JZ or Opcode.INE_JZ or Opcode.IGT_JZ or Opcode.ILT_JZ or Opcode.ILE_JZ or Opcode.PUSH_CONST_U8 or Opcode.PUSH_CONST_F)
 					{
 						pattern += " " + ((sbyte)op).ToString("X").PadLeft(2, '0');
 					}
@@ -381,7 +381,10 @@ namespace Decompiler
 
 			foreach (var @byte in bytes)
 			{
-				if (int.TryParse(@byte, System.Globalization.NumberStyles.HexNumber, null, out var res))
+				if (@byte.Length == 0)
+					continue;
+
+				if (@byte != "?" && int.TryParse(@byte, System.Globalization.NumberStyles.HexNumber, null, out var res))
 					compiled.Add(res);
 				else
 					compiled.Add(-1);
@@ -389,7 +392,7 @@ namespace Decompiler
 
 			for (var i = 0; i < (Function.ScriptFile.CodeTable.Count - compiled.Count); i++)
 			{
-				for (var j = 0; j < bytes.Length; j++)
+				for (var j = 0; j < compiled.Count; j++)
 				{
 					if (compiled[j] == -1)
 						continue;

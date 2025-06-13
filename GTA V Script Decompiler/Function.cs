@@ -362,25 +362,41 @@ namespace Decompiler
         /// if it is, dont add it (Rockstars way of doing and/or conditionals)
         /// </summary>
         /// <remarks>Do we really need this?</remarks>
+        /// TODO: if I ever come back to this, this is going to be the first thing I rewrite
+        /// Of course this broke again. Idk what to do with this anymore
         private void CheckDupForInstruction()
         {
-            //May need refining, but works fine for rockstars code
             var off = 0;
-Start:
+            var dup = new Instruction(Instruction.MapOpcode(CodeBlock[Offset]), Offset);
+            AddInstruction(Offset, dup);
+
+        Start:
             off += 1;
             if (Instruction.MapOpcode(CodeBlock[Offset + off]) == Opcode.NOP)
+            {
+                AddInstruction(Offset + off, new Instruction(Instruction.MapOpcode(CodeBlock[Offset + off]), Offset + off)); // add nop so it shows up in diassembler
                 goto Start;
+            }
             if (Instruction.MapOpcode(CodeBlock[Offset + off]) == Opcode.JZ)
             {
+                var jz = new Instruction(Instruction.MapOpcode(CodeBlock[Offset + off]), CodeBlock.GetRange(Offset + off + 1, 2), Offset + off);
+                jz.NopInstruction();
+                AddInstruction(Offset + off, jz);
+                dup.NopInstruction();
                 Offset = Offset + off + 2;
                 return;
             }
             if (Instruction.MapOpcode(CodeBlock[Offset + off]) == Opcode.INOT)
             {
+                var inot = new Instruction(Instruction.MapOpcode(CodeBlock[Offset + off]), Offset + off);
+                inot.NopInstruction();
+                AddInstruction(Offset + off, inot);
                 goto Start;
             }
 
-            Instructions.Add(new Instruction(Instruction.MapOpcode(CodeBlock[Offset]), Offset));
+            if (off != 1)
+                Offset += (off - 1);
+
             return;
         }
 
